@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Основы Vue</title>
+    <link rel="stylesheet" href="theme.css" />
+  </head>
+  <body>
+
+  <div class="container" id="app">
+    <div class="card">
+      <h1>План по изучению Vue.js</h1>
+
+      <div class="steps">
+        <div v-if="this.activeIndex < this.steps.length" class="steps-content" >
+          {{ steps[activeIndex].text }}
+        </div>
+        <div v-else class="steps-content">
+          {{ steps[this.steps.length - 1].text }}
+        </div>
+
+        <ul class="steps-list">
+          <li
+            v-for="(item, idx) in steps"
+            @click="setActive(idx), isLastStep"
+            :class="[
+            'steps-item',
+            {'active' : item.activeStep },
+            {'done' : item.doneStep }
+            ]"> <span>{{ idx+1 }}</span> {{ item.title }}
+          </li>
+        </ul>
+
+<!--        Если не активна кнопка Reset-->
+        <div v-if="!reset">
+          <button
+            class="btn"
+            @click="prev(), isLastStep"
+            :disabled="activeIndex === 0"
+          >Назад</button>
+
+          <button
+            class="btn primary"
+            @click="nextOfFinish(), isLastStep"
+            v-text="!lastStep ? 'Вперёд' : 'Закончить'"
+          ></button>
+        </div>
+
+<!--        Если кнопка Reset активна-->
+        <div v-else>
+          <button
+            class="btn"
+            @click="resetSteps"
+          >Начать заново</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="vue.js"></script>
+  </body>
+</html>
